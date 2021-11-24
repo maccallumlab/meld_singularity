@@ -1,8 +1,8 @@
 # Building MELD singularity containers
 
-Singularity gives us a way to package up an entire software
-stack in a way that is portable across different machines.
-The idea is to build an image that should be:
+[Singularity](https://sylabs.io) gives us a way to package up an
+entire software stack in a way that is portable across different
+machines.  The idea is to build an image that should be:
 
 1. Reproducible
 2. Sharable
@@ -34,18 +34,19 @@ into the image.
 
 The main lines that might need to be changed are the ones that download specific
 versions of openmm and meld from github. The format of the github urls is as follows.
-    - Tagged version
-        - https://github.com/openmm/openmm/archive/7.6.0.tar.gz
-            - This will download the version tagged with 7.6.0
-            - The resulting directory will be openmm-7.6.0
-    - Specific branch
-        - https://github.com/openmm/openmm/archive/master.tar.gz
-            - This will download the branch master
-            - The resulting directory will be openmm-master
-    - Specific hash
-        - https://github.com/openmm/openmm/archive/ed9df87.tar.gz
-            - This will download the specific commite with has ed9df87
-            - The resulting directory will be openmm-ed9df87
+
+- Tagged version
+    - `https://github.com/openmm/openmm/archive/7.6.0.tar.gz`
+        - This will download the version tagged with `7.6.0`
+        - The resulting directory will be `openmm-7.6.0`
+- Specific branch
+    - `https://github.com/openmm/openmm/archive/master.tar.gz`
+        - This will download the branch `master`
+        - The resulting directory will be `openmm-master`
+- Specific hash
+    - `https://github.com/openmm/openmm/archive/ed9df87.tar.gz`
+        - This will download the specific commite with has `ed9df87`
+        - The resulting directory will be `openmm-ed9df87`
 
 Note that we use a two-stage build process. In the `build` stage, we
 install the full `cuda-devel` stack which is very large. We then build
