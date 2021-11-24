@@ -1,11 +1,29 @@
 Bootstrap: docker
-From: nvidia/cuda:11.1.1-devel-ubuntu20.04
+From: nvidia/cuda:11.1.1-base-ubuntu20.04
 
 %post
     export DEBIAN_FRONTEND=noninteractive
 
     # Download latest package lists
     apt-get update -y
+
+    # Install minimal set of CUDA libraries needed for
+    # openmm and meld
+    apt-get install -y --no-install-recommends \
+        cuda-nvrtc-11-1=11.1.105-1 \
+        cuda-nvrtc-dev-11-1=11.1.105-1 \
+        libcufft-11-1=10.3.0.105-1 \
+        libcufft-dev-11-1=10.3.0.105-1 \
+        libcurand-11-1=10.2.2.105-1 \
+        libcurand-dev-11-1=10.2.2.105-1 \
+        libtinfo5 \
+        libncursesw5 \
+        cuda-cudart-dev-11-1=11.1.74-1 \
+        cuda-command-line-tools-11-1=11.1.1-1 \
+        cuda-minimal-build-11-1=11.1.1-1
+        # cuda-libraries-dev-11-1=11.1.1-1
+
+    export LIBRARY_PATH=/usr/local/cuda/lib64/stubs
 
     # Add Ubuntu repositories
     apt install -y software-properties-common lsb-release
@@ -115,12 +133,13 @@ From: nvidia/cuda:11.1.1-devel-ubuntu20.04
     cd ../..
     python3 setup.py install
 
-    # Remove the build directory to make the image smaller
     rm -rf /build
+    rm -rf /var/lib/apt/lists/*
 
 %test
     export PATH=/usr/local/amber/bin:$PATH
     export LD_LIBRARY_PATH=/usr/local/openmm/lib:$LD_LIBRARY_PATH
+    export LIBRARY_PATH=/usr/local/cuda/lib64/stubs
     tleap -h
     python3 -m openmm.testInstallation
     python3 -m meld.test_install
@@ -129,3 +148,4 @@ From: nvidia/cuda:11.1.1-devel-ubuntu20.04
     # Environment variables that will be set at runtime
     export PATH=/usr/local/amber/bin:$PATH
     export LD_LIBRARY_PATH=/usr/local/openmm/lib:$LD_LIBRARY_PATH
+    export LIBRARY_PATH=/usr/local/cuda/lib64/stubs
