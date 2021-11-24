@@ -49,13 +49,6 @@ versions of openmm and meld from github. The format of the github urls is as fol
         - This will download the specific commite with has `ed9df87`
         - The resulting directory will be `openmm-ed9df87`
 
-Note that we use a two-stage build process. In the `build` stage, we
-install the full `cuda-devel` stack which is very large. We then build
-ambertools, openmm, and meld. Next, we setup a second stage that only
-includes the `cuda-runtime` stack. We then copy over all of the build
-artifacts for ambertools, openmm, and meld to this image. Overall, this
-process reduces the size of the image by about half.
-
 ## Step 2: Build the singularity image
 
 Connect to the virtual machine:
