@@ -8,7 +8,6 @@ machines.  The idea is to build an image that should be:
 2. Sharable
 3. Portable across machines
 
-
 ## Step 1: Install VirtualBox and Vagrant
 
 We use a virtual box that has everything needed to build the singularity image
@@ -18,13 +17,15 @@ package or by [building from source](https://sylabs.io/guides/3.5/admin-guide/in
 
 1. Install [VirtualBox](https://www.virtualbox.org)
 2. Install [Vagrant](https://www.virtualbox.org)
+3. `vagrant plugin install vagrant-disksize`
 
 Run `vagrant up` to boot up the virutal machine. 
 
 Run `vagrant ssh` to connect to the virtual machine. Press `Ctrl-D` to exit.
 
 Run `vagrant halt` to stop the virtual machine. If you want to reclaim the space,
-run `vagrant destroy` to remove the image from your system.
+run `vagrant destroy` to remove the image from your system. (The vagrant images
+can be quite large.)
 
 ## Step 2: Edit the singularity definition
 
@@ -62,8 +63,8 @@ Connect to the virtual machine:
 2. `vagrant ssh`
 3. `cd /vagrant`
 
-The `/vagrant` directory is a pass-through directory. Files in this directory are
-accessible in both the virtual machine and the host system.
+The `/vagrant` directory is a pass-through directory. Files in this directory
+are accessible in both the virtual machine and the host system.
 
 4. `sudo singularity build image_name.sif meld.def`
 
